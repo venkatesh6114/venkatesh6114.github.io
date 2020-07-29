@@ -76,6 +76,7 @@ class latencyMeasurer {
                 let averageInputValue = sumAudio(left, right, numberOfSamples) / numberOfSamples;
                 this.rampdec = 0.0;
 
+		console.log(averageInputValue +","+this.threshold);
                 if (averageInputValue > this.threshold) { // The signal is above the threshold, so our sine wave comes back on the input.
                     let n = 0, i = 0;
                     while (n < numberOfSamples) { // Check the location when it became loud enough.
@@ -85,6 +86,7 @@ class latencyMeasurer {
                     }
                     this.samplesElapsed += n; // Now we know the total round trip latency.
 
+		    console.log("success");
                     if (this.samplesElapsed > numberOfSamples) { // Expect at least 1 buffer of round-trip latency.
                         this.roundTripLatencyMs[this.state - 1] = (this.samplesElapsed * 1000) / this.samplerate;
 
@@ -107,6 +109,7 @@ class latencyMeasurer {
                             this.measurementState = this.nextMeasurementState = measurementStates.waiting;
                         }
 
+			console.log(this.latencyMs);
                         this.state++;
                     } else this.measurementState = this.nextMeasurementState = measurementStates.waiting; // Happens when an early noise comes in.
 
@@ -114,6 +117,7 @@ class latencyMeasurer {
                 } else { // Still listening.
                     this.samplesElapsed += numberOfSamples;
 
+		    console.log("env noise");
                     // Do not listen to more than a second, let's start over. Maybe the environment's noise is too high.
                     if (this.samplesElapsed > this.samplerate) {
                         this.rampdec = 1.0 / numberOfSamples;
