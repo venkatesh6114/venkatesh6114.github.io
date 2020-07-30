@@ -1,3 +1,43 @@
+<html>
+<title> Mic Echo </title>
+<script type="text/javascript">
 
-<!-- saved from url=(0041)https://vmi2.sierraware.com/mic_echo.html -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body><div class="line-gutter-backdrop"></div><table><tbody><tr><td class="line-number" value="1"></td><td class="line-content"><span class="html-tag">&lt;html&gt;</span></td></tr><tr><td class="line-number" value="2"></td><td class="line-content"><span class="html-tag">&lt;title&gt;</span> Mic Echo <span class="html-tag">&lt;/title&gt;</span></td></tr><tr><td class="line-number" value="3"></td><td class="line-content"><span class="html-tag">&lt;script <span class="html-attribute-name">type</span>="<span class="html-attribute-value">text/javascript</span>"&gt;</span></td></tr><tr><td class="line-number" value="4"></td><td class="line-content"></td></tr><tr><td class="line-number" value="5"></td><td class="line-content">//var ctx = new AudioContext();</td></tr><tr><td class="line-number" value="6"></td><td class="line-content">var startTime = 0;</td></tr><tr><td class="line-number" value="7"></td><td class="line-content">function play(audio_buffer) {</td></tr><tr><td class="line-number" value="8"></td><td class="line-content">console.log(audio_buffer);</td></tr><tr><td class="line-number" value="9"></td><td class="line-content">	var audio_src = actx.createBufferSource();</td></tr><tr><td class="line-number" value="10"></td><td class="line-content">        audio_src.buffer = audio_buffer;</td></tr><tr><td class="line-number" value="11"></td><td class="line-content">        audio_src.looping = false;</td></tr><tr><td class="line-number" value="12"></td><td class="line-content">        audio_src.connect(actx.destination);</td></tr><tr><td class="line-number" value="13"></td><td class="line-content"></td></tr><tr><td class="line-number" value="14"></td><td class="line-content">        if (startTime &lt; actx.currentTime)</td></tr><tr><td class="line-number" value="15"></td><td class="line-content">                startTime = actx.currentTime;</td></tr><tr><td class="line-number" value="16"></td><td class="line-content">        audio_src[audio_src.start ? 'start': 'noteOn'](startTime);</td></tr><tr><td class="line-number" value="17"></td><td class="line-content">}</td></tr><tr><td class="line-number" value="18"></td><td class="line-content">function start() {</td></tr><tr><td class="line-number" value="19"></td><td class="line-content">	actx = new AudioContext();</td></tr><tr><td class="line-number" value="20"></td><td class="line-content">	var constraints = {audio:true, video:false};</td></tr><tr><td class="line-number" value="21"></td><td class="line-content">	navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {</td></tr><tr><td class="line-number" value="22"></td><td class="line-content">		var tracks = stream.getAudioTracks();</td></tr><tr><td class="line-number" value="23"></td><td class="line-content">		if (!tracks[0]) {</td></tr><tr><td class="line-number" value="24"></td><td class="line-content">			console.log('DOMException: UnkownError, media track not found.');</td></tr><tr><td class="line-number" value="25"></td><td class="line-content">		}</td></tr><tr><td class="line-number" value="26"></td><td class="line-content">		var source = actx.createMediaStreamSource(stream);</td></tr><tr><td class="line-number" value="27"></td><td class="line-content">		var processor = actx.createScriptProcessor(256/*buffer size*/, 1/*channelCount*/,1/* outputchannelCount*/);</td></tr><tr><td class="line-number" value="28"></td><td class="line-content">		processor.onaudioprocess = (e) =&gt; {</td></tr><tr><td class="line-number" value="29"></td><td class="line-content">			const { inputBuffer, playbackTime } = e; // eslint-disable-line</td></tr><tr><td class="line-number" value="30"></td><td class="line-content">			const { sampleRate, length, duration, numberOfChannels } = inputBuffer; // eslint-disable-line</td></tr><tr><td class="line-number" value="31"></td><td class="line-content">play(inputBuffer);</td></tr><tr><td class="line-number" value="32"></td><td class="line-content">			//var pcm = inputBuffer.getChannelData(0);</td></tr><tr><td class="line-number" value="33"></td><td class="line-content">			//play(pcm);</td></tr><tr><td class="line-number" value="34"></td><td class="line-content">		}</td></tr><tr><td class="line-number" value="35"></td><td class="line-content">		source.connect(processor);</td></tr><tr><td class="line-number" value="36"></td><td class="line-content">		processor.connect(actx.destination);</td></tr><tr><td class="line-number" value="37"></td><td class="line-content">	});</td></tr><tr><td class="line-number" value="38"></td><td class="line-content">}</td></tr><tr><td class="line-number" value="39"></td><td class="line-content"><span class="html-tag">&lt;/script&gt;</span></td></tr><tr><td class="line-number" value="40"></td><td class="line-content"><span class="html-tag">&lt;body&gt;</span></td></tr><tr><td class="line-number" value="41"></td><td class="line-content"><span class="html-tag">&lt;button <span class="html-attribute-name">type</span>="<span class="html-attribute-value">button</span>" <span class="html-attribute-name">onclick</span>="<span class="html-attribute-value">start()</span>"&gt;</span> start<span class="html-tag">&lt;/button&gt;</span></td></tr><tr><td class="line-number" value="42"></td><td class="line-content"><span class="html-tag">&lt;/body&gt;</span></td></tr><tr><td class="line-number" value="43"></td><td class="line-content"><span class="html-tag">&lt;/html&gt;</span></td></tr><tr><td class="line-number" value="44"></td><td class="line-content"><span class="html-end-of-file"></span></td></tr></tbody></table></body></html>
+//var ctx = new AudioContext();
+var startTime = 0;
+function play(audio_buffer) {
+console.log(audio_buffer);
+	var audio_src = actx.createBufferSource();
+        audio_src.buffer = audio_buffer;
+        audio_src.looping = false;
+        audio_src.connect(actx.destination);
+
+        if (startTime < actx.currentTime)
+                startTime = actx.currentTime;
+        audio_src[audio_src.start ? 'start': 'noteOn'](startTime);
+}
+function start() {
+	actx = new AudioContext();
+	var constraints = {audio:true, video:false};
+	navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+		var tracks = stream.getAudioTracks();
+		if (!tracks[0]) {
+			console.log('DOMException: UnkownError, media track not found.');
+		}
+		var source = actx.createMediaStreamSource(stream);
+		var processor = actx.createScriptProcessor(256/*buffer size*/, 1/*channelCount*/,1/* outputchannelCount*/);
+		processor.onaudioprocess = (e) => {
+			const { inputBuffer, playbackTime } = e; // eslint-disable-line
+			const { sampleRate, length, duration, numberOfChannels } = inputBuffer; // eslint-disable-line
+play(inputBuffer);
+			//var pcm = inputBuffer.getChannelData(0);
+			//play(pcm);
+		}
+		source.connect(processor);
+		processor.connect(actx.destination);
+	});
+}
+</script>
+<body>
+<button type="button" onclick="start()"> start</button>
+</body>
+</html>
