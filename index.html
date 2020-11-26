@@ -1,0 +1,101 @@
+
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Phaser Example Runner</title>
+        <meta name="viewport" content="initial-scale=1 maximum-scale=1 user-scalable=0 minimal-ui" />
+        <script src="_site/js/jquery-2.0.3.min.js" type="text/javascript"></script>
+        <script src="_site/phaser/phaser.2.6.2.min.js" type="text/javascript"></script>
+        <script src="_site/phaser/blob.js" type="text/javascript"></script>
+        <script src="_site/phaser/canvas-to-blob.js" type="text/javascript"></script>
+        <script src="_site/phaser/filesaver.js" type="text/javascript"></script>
+        <script src="_site/phaser/embed.js" type="text/javascript"></script>
+        <style>
+            body {
+                margin: 0px;
+                padding: 0px;
+                font-family: Arial;
+                font-size: 14px;
+                background-color: #000000;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="phaser-example"></div>
+
+        <script type="text/javascript">
+
+        var IDE_HOOK = false;
+        var VERSION = '2.6.2';
+
+        
+// var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(320, 241, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+
+function preload() {
+
+    game.load.image('dragon', 'assets/pics/cougar_dragonsun.png');
+    game.load.image('star', 'assets/pics/monika_krawinkel-amberstar_title.png');
+    game.load.image('nanoha', 'assets/pics/nanoha_taiken_pink.png');
+
+}
+
+function create() {
+
+    // game.add.image(0, 0, 'star');
+
+    var i = game.add.image(game.world.centerX, game.world.centerY, 'nanoha');
+    i.anchor.set(0.5);
+
+    // var sprite = game.add.sprite(game.world.centerX, game.world.centerY, 'dragon');
+    // sprite.anchor.set(0.5);
+
+    game.stage.backgroundColor = '#4d4d4d';
+
+    // Stretch to fill
+    game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+
+    // Keep original size
+    // game.scale.fullScreenScaleMode = Phaser.ScaleManager.NO_SCALE;
+
+    // Maintain aspect ratio
+    // game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+
+    game.input.onDown.add(gofull, this);
+
+}
+
+function gofull() {
+
+    if (game.scale.isFullScreen)
+    {
+//        game.scale.stopFullScreen();
+    }
+    else
+    {
+        game.scale.startFullScreen(false);
+    }
+
+}
+
+function update() {
+
+}
+
+function render () {
+
+    // game.debug.text('Click / Tap to go fullscreen', 270, 16);
+    // game.debug.text('Click / Tap to go fullscreen', 0, 16);
+
+    game.debug.inputInfo(32, 32);
+    // game.debug.pointer(game.input.activePointer);
+
+}
+        
+        </script>
+
+    </body>
+</html>
+
